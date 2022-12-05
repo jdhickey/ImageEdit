@@ -9,7 +9,6 @@ image_path = "test_photos/corvids.jpg"
 def split(path, save = False):
     image = fm.read_image(path)
     name = (image.filename).split("/")[-1]
-    print(name)
 
     arr = np.array(image)
     shape = np.shape(arr)
