@@ -63,3 +63,5 @@ def sin_2D(x, show=False, save=False):
         img.save("./out/sin_2D_" + filename + ".jpg")
     else:
         return img
+
+

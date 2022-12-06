@@ -4,7 +4,11 @@ import PIL
 import uuid
 
 
-def split_rgb(image, name=str(uuid.uuid4()), show=False, save=False):
+def split_rgb(image, name="", show=False, save=False):
+    try:
+        name = image.filename.split("/")[-1]
+    except Exception as e:
+        name = name if not name == "" else str(uuid.uuid4())
 
     arr = np.array(image)
     r_arr, g_arr, b_arr = np.array(arr), np.array(arr), np.array(arr)
@@ -31,7 +35,11 @@ def split_rgb(image, name=str(uuid.uuid4()), show=False, save=False):
         return r_img, g_img, b_img
 
 
-def split_cmyk(image, name=str(uuid.uuid4()), show=False, save=False):
+def split_cmyk(image, name="", show=False, save=False):
+    try:
+        name = image.filename.split("/")[-1]
+    except Exception as e:
+        name = name if not name == "" else str(uuid.uuid4())
 
     # Split the array into a red, green, and blue channel
     arr = np.array(image)
