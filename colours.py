@@ -4,7 +4,7 @@ import PIL
 import file_manipulation as fm
 
 
-def split(path, show = False, save = False):
+def split_rgb(path, show=False, save=False):
     image = fm.read_image(path)
     name = image.filename.split("/")[-1]
 
@@ -20,9 +20,9 @@ def split(path, show = False, save = False):
     b_img = PIL.Image.fromarray(b_arr)
 
     if save:
-        r_img.save("./out/r_" + name)
-        g_img.save("./out/g_" + name)
-        b_img.save("./out/b_" + name)
+        r_img.save("./out/rgb/r_" + name)
+        g_img.save("./out/rgb/g_" + name)
+        b_img.save("./out/rgb/b_" + name)
     elif show:
         r_img.show()
         g_img.show()
@@ -31,7 +31,7 @@ def split(path, show = False, save = False):
         return r_img, g_img, b_img
 
 
-def split_cmyk(path, show = False, save = False):
+def split_cmyk(path, show=False, save=False):
     image = fm.read_image(path)
     name = image.filename.split("/")[-1]
 
@@ -62,10 +62,10 @@ def split_cmyk(path, show = False, save = False):
     k_img = PIL.Image.fromarray(k_arr)
 
     if save:
-        c_img.save("./out/c_" + name)
-        m_img.save("./out/m_" + name)
-        y_img.save("./out/y_" + name)
-        k_img.save("./out/k_" + name)
+        c_img.save("./out/cmyk/c_" + name)
+        m_img.save("./out/cmyk/m_" + name)
+        y_img.save("./out/cmyk/y_" + name)
+        k_img.save("./out/cmyk/k_" + name)
     elif show:
         c_img.show()
         m_img.show()

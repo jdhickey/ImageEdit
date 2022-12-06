@@ -7,4 +7,4 @@ import file_manipulation as fm
 
 image_path = "test_photos/corvids.jpg"
 
-colours.split_cmyk(image_path, show=True)
+colours.split_cmyk(image_path, save=True)
