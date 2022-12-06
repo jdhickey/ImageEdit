@@ -37,4 +37,3 @@ def split_cmyk(path, show = False, save = False):
     arr = np.array(image)
 
 
-
