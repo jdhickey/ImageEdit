@@ -114,29 +114,30 @@ def pixelate(image, size, name="", show=False, save=False):
         return img
 
 
-def transparent(image, name="", key="", vary=0, show=False, save=False):
+def transparent(image, name="", show=False, save=False):
     try:
         name = image.filename.split("/")[-1]
     except Exception as e:
         name = name if not name == "" else str(uuid.uuid4())
-
-    if key == "":
-        key = (0, 0, 0)
 
     arr_in = np.array(image)
     shape = np.shape(arr_in)
     arr_out = np.full((shape[0], shape[1], 4), 0)
     arr_out[..., [0, 1, 2]] = arr_in
 
+    k_val = np.divide((255 - np.maximum(np.maximum(arr_in[..., 0],
+                                                   arr_in[..., 1]),
+                                        arr_in[..., 2])), 255)
+
     for i in range(shape[0]):
         for j in range(shape[1]):
-            if np.absolute(arr_in[i][j][0] - key[0]) > vary or \
-            np.absolute(arr_in[i][j][1] - key[1]) > vary or \
-            np.absolute(arr_in[i][j][2] - key[2]) > vary:
-                arr_out[i][j][3] = 255
+            arr_out[i][j][3] = 255 * (1-k_val[i][j])
 
-    image.putalpha(127)
-    arr = np.array(image)
+    img = PIL.Image.fromarray(arr_out.astype(np.uint8))
 
-    PIL.Image.fromarray(arr).show()
-    PIL.Image.fromarray(arr_out.astype(np.uint8)).show()
+    if save:
+        img.save("./out/transparent_" + name)
+    elif show:
+        img.show()
+    else:
+        return img
