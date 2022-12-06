@@ -20,7 +20,29 @@ def rand_img(x, y, show=False, save=False):
     if show:
         img.show()
     elif save:
-        img.save("./out/" + filename + ".jpg")
+        img.save("./out/random_" + filename + ".jpg")
     else:
         return img
+
+
+def circle(x, y, centre, radius, show=False, save=False):
+    filename = str(uuid.uuid4())
+    arr = np.zeros((x, y, 3))
+
+    for i in range(x):
+        for j in range(y):
+            if ((i - centre[0])**2 + (j - centre[1])**2 - radius**2) in range(radius*2):
+                arr[i][j] = [255, 255, 255]
+
+    img = PIL.Image.fromarray(arr.astype(np.uint8))
+
+    if show:
+        img.show()
+    elif save:
+        img.save("./out/circle_" + filename + ".jpg")
+    else:
+        return img
+
+
+
 

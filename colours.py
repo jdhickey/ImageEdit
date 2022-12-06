@@ -62,7 +62,7 @@ def split_cmyk(path, show=False, save=False):
     y_arr[..., 0], y_arr[..., 1], y_arr[..., 2] = y_val, y_val, 0
 
     # Creates a new image array for black/white
-    k_val = k_val * 255
+    k_val = 255 - k_val * 255
     k_arr[..., 0], k_arr[..., 1], k_arr[..., 2] = k_val, k_val, k_val
 
     # Converts the image arrays to image objects
