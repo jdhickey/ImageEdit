@@ -4,4 +4,4 @@ import colours as cl
 import file_manipulation as fm
 
 
-cl.pixelate(fm.read_image("./test_photos/corvids.jpg"), 300, show=True)
+cl.transparent(fm.read_image("./out/cmyk/y_corvids.jpg"), 300, show=True)

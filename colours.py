@@ -101,7 +101,42 @@ def pixelate(image, size, name="", show=False, save=False):
 
     for i in range(size//2, shape[0]+size//2+1, size):
         for j in range(size//2, shape[1]+size//2+1, size):
-            arr_out[i-size//2:i+size//2+1, j-size//2:j+size//2+1] = arr_in[min(i, shape[0]-1)][min(j, shape[1]-1)]
+            arr_out[i-size//2:i+size//2+1, j-size//2:j+size//2+1] = \
+                arr_in[min(i, shape[0]-1)][min(j, shape[1]-1)]
 
     img = PIL.Image.fromarray(arr_out)
-    img.show()
+
+    if save:
+        img.save("./out/pixel_" + str(size) + "_" + name)
+    elif show:
+        img.show()
+    else:
+        return img
+
+
+def transparent(image, name="", key="", vary=0, show=False, save=False):
+    try:
+        name = image.filename.split("/")[-1]
+    except Exception as e:
+        name = name if not name == "" else str(uuid.uuid4())
+
+    if key == "":
+        key = (0, 0, 0)
+
+    arr_in = np.array(image)
+    shape = np.shape(arr_in)
+    arr_out = np.full((shape[0], shape[1], 4), 0)
+    arr_out[..., [0, 1, 2]] = arr_in
+
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if np.absolute(arr_in[i][j][0] - key[0]) > vary or \
+            np.absolute(arr_in[i][j][1] - key[1]) > vary or \
+            np.absolute(arr_in[i][j][2] - key[2]) > vary:
+                arr_out[i][j][3] = 255
+
+    image.putalpha(127)
+    arr = np.array(image)
+
+    PIL.Image.fromarray(arr).show()
+    PIL.Image.fromarray(arr_out.astype(np.uint8)).show()
