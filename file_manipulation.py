@@ -44,5 +44,22 @@ def circle(x, y, centre, radius, show=False, save=False):
         return img
 
 
+def sin_2D(x, show=False, save=False):
+    filename = str(uuid.uuid4())
+    arr = np.zeros((x, x, 3))
 
+    for i in range(x):
+        for j in range(x):
+            arr[i][j] = (
+            256 * np.sin(i * j * 2 * np.pi / x),
+            256 * np.sin(i * j * 2 * np.pi / x),
+            256 * np.sin(i * j * 2 * np.pi / x))
 
+    img = PIL.Image.fromarray(arr.astype(np.uint8))
+
+    if show:
+        img.show()
+    elif save:
+        img.save("./out/sin_2D_" + filename + ".jpg")
+    else:
+        return img
