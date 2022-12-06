@@ -89,7 +89,7 @@ def split_cmyk(image, name="", show=False, save=False):
         return c_img, m_img, y_img, k_img
 
 
-def soften(image, p, name="", show=False, save=False):
+def pixelate(image, size, name="", show=False, save=False):
     try:
         name = image.filename.split("/")[-1]
     except Exception as e:
@@ -97,37 +97,11 @@ def soften(image, p, name="", show=False, save=False):
 
     arr_in = np.array(image)
     shape = np.shape(arr_in)
-    arr_out_min = np.zeros(shape)
-    arr_out_max = np.zeros(shape)
+    arr_out = np.array(arr_in)
 
-    for i in range(shape[0]):
-        for j in range(shape[1]):
-            row = arr_in[i, :, :]
-            row = [np.average(row[:, 0]), np.average(row[:, 1]),
-                   np.average(row[:, 2])]
-            row = np.array(row)  # average colour of row
+    for i in range(size//2, shape[0]+size//2+1, size):
+        for j in range(size//2, shape[1]+size//2+1, size):
+            arr_out[i-size//2:i+size//2+1, j-size//2:j+size//2+1] = arr_in[min(i, shape[0]-1)][min(j, shape[1]-1)]
 
-            col = arr_in[:, j, :]
-            col = [np.average(col[:, 0]), np.average(col[:, 1]),
-                   np.average(col[:, 2])]
-            col = np.array(col)  # average colour of column
-
-            av = np.divide(row + col, 2)
-
-            arr_out_min[i][j] = np.minimum((1 - p) * arr_in[i][j] + p * av,
-                                           arr_in[i][j])
-            arr_out_max[i][j] = np.maximum((1 - p) * arr_in[i][j] + p * av,
-                                           arr_in[i][j])
-
-    img_min = PIL.Image.fromarray(arr_out_min.astype(np.uint8))
-    img_max = PIL.Image.fromarray(arr_out_max.astype(np.uint8))
-
-    if show:
-        img_min.show()
-        img_max.show()
-    elif save:
-        img_min.save("./out/min_soft_" + name + ".jpg")
-        img_max.save("./out/max_soft_" + name + ".jpg")
-
-    else:
-        return img_min, img_max
+    img = PIL.Image.fromarray(arr_out)
+    img.show()

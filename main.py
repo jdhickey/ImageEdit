@@ -4,5 +4,4 @@ import colours as cl
 import file_manipulation as fm
 
 
-
-cl.soften(fm.read_image("./test_photos/corvids.jpg"), 1, show=True)
+cl.pixelate(fm.read_image("./test_photos/corvids.jpg"), 300, show=True)
