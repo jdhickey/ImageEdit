@@ -105,12 +105,12 @@ def soften(image, p, name="", show=False, save=False):
             row = arr_in[i, :, :]
             row = [np.average(row[:, 0]), np.average(row[:, 1]),
                    np.average(row[:, 2])]
-            row = np.array(row)
+            row = np.array(row)  # average colour of row
 
             col = arr_in[:, j, :]
             col = [np.average(col[:, 0]), np.average(col[:, 1]),
                    np.average(col[:, 2])]
-            col = np.array(col)
+            col = np.array(col)  # average colour of column
 
             av = np.divide(row + col, 2)
 
