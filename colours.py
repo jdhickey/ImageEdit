@@ -1,12 +1,10 @@
-import numpy
+
 import numpy as np
 import PIL
-import file_manipulation as fm
+import uuid
 
 
-def split_rgb(path, show=False, save=False):
-    image = fm.read_image(path)
-    name = image.filename.split("/")[-1]
+def split_rgb(image, name=str(uuid.uuid4()), show=False, save=False):
 
     arr = np.array(image)
     r_arr, g_arr, b_arr = np.array(arr), np.array(arr), np.array(arr)
@@ -33,9 +31,7 @@ def split_rgb(path, show=False, save=False):
         return r_img, g_img, b_img
 
 
-def split_cmyk(path, show=False, save=False):
-    image = fm.read_image(path)
-    name = image.filename.split("/")[-1]
+def split_cmyk(image, name=str(uuid.uuid4()), show=False, save=False):
 
     # Split the array into a red, green, and blue channel
     arr = np.array(image)
