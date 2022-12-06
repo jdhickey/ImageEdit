@@ -64,5 +64,3 @@ def sin_2D(x, show=False, save=False):
     else:
         return img
 
-
-

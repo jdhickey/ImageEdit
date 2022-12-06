@@ -88,3 +88,34 @@ def split_cmyk(image, name="", show=False, save=False):
     else:
         return c_img, m_img, y_img, k_img
 
+
+def soften(image, radius, name="", show=False, save=False):
+    try:
+        name = image.filename.split("/")[-1]
+    except Exception as e:
+        name = name if not name == "" else str(uuid.uuid4())
+
+    arr_in = np.array(image)
+    shape = np.shape(arr_in)
+    arr_out = np.zeros(shape)
+
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            total = np.array([0, 0, 0])
+            count = 0
+            for k in range(max(i-radius, 0), min(i+radius, shape[0])):
+                for l in range(max(j-radius, 0), min(j+radius, shape[1])):
+                    total += arr_in[k][l]
+                    count += 1
+            total = total / count
+            arr_out[i][j] = total
+            print(i)
+
+    img = PIL.Image.fromarray(arr_out.astype(np.uint8))
+
+    if show:
+        img.show()
+    elif save:
+        img.save("./out/sin_2D_" + name + ".jpg")
+    else:
+        return img
